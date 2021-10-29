@@ -12,7 +12,7 @@ class Simulation {
     for (let i = 0; i < this.nMasses; i++) {
       this.masses.push({
         force: [0, 0, 0],
-        velocity: vec3.random([], 1),
+        velocity: vec3.random([], 0.2),
         position: vec3.random([], 1),
         mass: Math.random() * 0.5 + 1.5,
         arrays: {
