@@ -75,7 +75,7 @@ const interleavedStripRoundCapJoin3DDEMO = commands.interleavedStripRoundCapJoin
 );
 
 const model = mat4.create();
-const view = mat4.lookAt([], [10, 10, 50], [0, 0, 0], [0, 1, 0]);
+const view = mat4.lookAt([], [50, 50, 50], [0, 0, 0], [0, 1, 0]);
 const projection = mat4.perspective(
   [],
   Math.PI / 3,
@@ -129,11 +129,11 @@ function renderLoop() {
     interleavedStripRoundCapJoin3DDEMO({
       points: buffers[i].position,
       color: buffers[i].color,
-      width: sim.masses[i].mass * 2,
+      width: sim.masses[i].mass * 3,
       model: model,
       view,
       projection,
-      resolution: [canvas.width, canvas.height],
+      resolution: [canvas.width*2, canvas.height*2],
       segments: Math.min(sim.history - 1, sim.steps - 1),
       viewport
     });
