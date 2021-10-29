@@ -1,5 +1,7 @@
 This is the source for the demos in my blog post [Instanced Line Rendering](https://wwwtyro.net/2019/11/18/instanced-lines.html).
 
+![Lorenz Example](imgs/lorenz.png)
+
 To build the demos:
 
 ```sh
