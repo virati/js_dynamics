@@ -8,7 +8,7 @@ A viewer to see animated versions of dynamics (and soon "control", whatever that
 
 This is the source for the demos in my blog post [Instanced Line Rendering](https://wwwtyro.net/2019/11/18/instanced-lines.html).
 
-![Lorenz Example](imgs/lorenz.png)
+![Lorenz Example](img/lorenz.png)
 
 To build the demos:
 
