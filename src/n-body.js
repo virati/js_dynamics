@@ -92,16 +92,22 @@ let sim = new Simulation(5, 10000, 0.125);
 sim.step();
 
 window.addEventListener("mousedown", () => {
-  sim = new Simulation(5, 10000, 0.125);
+  if (animate === true){
+    animate = false;
+  }
+  else {
+    sim = new Simulation(5, 10000, 0.125);
+    animate = true;
+  }
 });
 
-let animate = false;
+let animate = true;
 window.addEventListener("mouseover", () => {
   animate = true;
 });
 
 window.addEventListener("mouseout", () => {
-  animate = false;
+  animate = true;
 });
 
 const buffers = [];
