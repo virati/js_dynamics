@@ -1,4 +1,4 @@
-const { vec3, mat4 } = require("gl-matrix");
+const { vec3, mat4} = require("gl-matrix");
 const demo = require("./demo");
 const commands = require("./commands");
 
@@ -15,6 +15,7 @@ class Simulation {
         velocity: vec3.random([], 0.2),
         position: vec3.random([], 1),
         mass: Math.random() * 0.5 + 1.5,
+        cpos: vec3.create([]),
         arrays: {
           position: new Float32Array(this.history * 3),
           color: new Float32Array(this.history * 3)
@@ -27,30 +28,15 @@ class Simulation {
   step() {
     for (let j = 0; j < this.nMasses; j++) {
       const mj = this.masses[j];
-      //mj.force = vec3.scale([], mj.position, -32);
-      
-      const cpos = vec3.create([])
       // this is where we do dynamics!
-      vec3.set(cpos,-mj.position[0],-mj.position[1],-mj.position[2])
-      
-      const jkl = vec3.length(cpos);
-      const mag = jkl * jkl - 16.0;
-      const force = vec3.normalize([], cpos);
-      
-      vec3.scale(force, force, mag / mj.mass);
-      //vec3.add(mj.force, mj.force, force);
-      vec3.copy(mj.force, force)
-
-      if (vec3.length(mj.force) > 1.0) {
-        vec3.normalize(mj.force, mj.force);
-      }
+      vec3.set(mj.cpos,-mj.position[0],-mj.position[1],-mj.position[2])
     }
     for (const mass of this.masses) {
       vec3.scaleAndAdd(
         mass.velocity,
         mass.velocity,
-        mass.force,
-        this.dt / mass.mass
+        mass.cpos,
+        this.dt
       );
       if (vec3.length(mass.velocity) > 1.0) {
         vec3.normalize(mass.velocity, mass.velocity);
@@ -91,7 +77,7 @@ const projection = mat4.perspective(
 );
 const viewport = { x: 0, y: 0, width: canvas.width, height: canvas.height };
 
-let sim = new Simulation(5, 10000, 0.125);
+let sim = new Simulation(5, 10000, 0.0125);
 sim.step();
 
 window.addEventListener("mousedown", () => {
@@ -99,7 +85,7 @@ window.addEventListener("mousedown", () => {
     animate = false;
   }
   else {
-    sim = new Simulation(5, 10000, 0.125);
+    sim = new Simulation(5, 10000, 0.0125);
     animate = true;
   }
 });
