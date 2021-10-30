@@ -17,8 +17,9 @@
     "watch": "^1.0.2"
   },
   "dependencies": {
-    "regl": "^1.3.13",
+    "ccapture.js": "^1.1.0",
     "gl-matrix": "^3.1.0",
+    "regl": "^1.3.13",
     "trackball-controller": "^2.0.0"
   }
 }
