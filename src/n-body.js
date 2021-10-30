@@ -31,6 +31,9 @@ class Simulation {
   step(sigma=10) {
     for (let j = 0; j < this.nMasses; j++) {
       const mj = this.masses[j];
+      if (vec3.length(mj.position) > 100){
+        mj.position = vec3.random([], 10);
+      }
       // this is where we do dynamics!
       vec3.set(mj.cpos,
         sigma * (mj.position[1] - mj.position[0]),
@@ -85,10 +88,6 @@ const projection = mat4.perspective(
 );
 const viewport = { x: 0, y: 0, width: canvas.width, height: canvas.height };
 
-let sim = new Simulation(20, 300, 0.0125);
-sim.step();
-
-
 let sigma = 10
 let width_lines = 10
 window.addEventListener("keyup", (event) => {
@@ -106,6 +105,9 @@ window.addEventListener("keyup", (event) => {
   }
   
 })
+
+let sim = new Simulation(20, 300, 0.0125);
+sim.step();
 
 window.addEventListener("mousedown", () => {
   if (animate === true){
