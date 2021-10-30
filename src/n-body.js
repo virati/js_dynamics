@@ -103,7 +103,7 @@ const projection = mat4.perspective(
 const viewport = { x: 0, y: 0, width: canvas.width, height: canvas.height };
 
 let sigma = 10;
-let width_lines = 10;
+let width_lines = 5;
 let dynclass = 0;
 window.addEventListener("keyup", (event) => {
   if (event.key == 'ArrowLeft'){
@@ -125,7 +125,7 @@ window.addEventListener("keyup", (event) => {
   
 })
 
-let sim = new Simulation(20, 300, 0.0125);
+let sim = new Simulation(20, 500, 0.0100);
 sim.step();
 
 window.addEventListener("mousedown", () => {
@@ -133,7 +133,7 @@ window.addEventListener("mousedown", () => {
     animate = false;
   }
   else {
-    sim = new Simulation(20, 300, 0.0125);
+    sim = new Simulation(20, 500, 0.0100);
     animate = true;
   }
 });
