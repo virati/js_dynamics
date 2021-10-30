@@ -88,24 +88,6 @@ const viewport = { x: 0, y: 0, width: canvas.width, height: canvas.height };
 let sim = new Simulation(20, 300, 0.0125);
 sim.step();
 
-window.addEventListener("mousedown", () => {
-  if (animate === true){
-    animate = false;
-  }
-  else {
-    sim = new Simulation(20, 300, 0.0125);
-    animate = true;
-  }
-});
-
-let animate = true;
-window.addEventListener("mouseover", () => {
-  animate = true;
-});
-
-window.addEventListener("mouseout", () => {
-  animate = false;
-});
 
 let sigma = 10
 let width_lines = 10
@@ -124,6 +106,25 @@ window.addEventListener("keyup", (event) => {
   }
   
 })
+
+window.addEventListener("mousedown", () => {
+  if (animate === true){
+    animate = false;
+  }
+  else {
+    sim = new Simulation(20, 300, 0.0125);
+    animate = true;
+  }
+});
+
+let animate = true;
+window.addEventListener("mouseover", () => {
+  animate = true;
+});
+
+window.addEventListener("mouseout", () => {
+  animate = false;
+});
 
 const buffers = [];
 for (const mass of sim.masses) {
