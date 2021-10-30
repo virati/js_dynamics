@@ -122,7 +122,16 @@ window.addEventListener("keyup", (event) => {
     dynclass += 1;
     dynclass = dynclass % 3;
   }
-  
+  else if (event.key == 'b'){
+    for (const mass of sim.masses) {
+      vec3.scaleAndAdd(
+        mass.position,
+        mass.position,
+        vec3.random([], 10),
+        1
+      );
+    }
+  }
 })
 
 let sim = new Simulation(20, 500, 0.0100);
