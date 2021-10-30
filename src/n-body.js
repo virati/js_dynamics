@@ -9,9 +9,9 @@ class Simulation {
     this.history = history;
     this.masses = [];
     this.steps = 0;
-    this.sigma = 10;
+    //this.sigma = 10;
     this.beta = 8/3;
-    this.rho = 28;
+    //this.rho = 28;
     for (let i = 0; i < this.nMasses; i++) {
       this.masses.push({
         force: [0, 0, 0],
@@ -28,13 +28,13 @@ class Simulation {
     }
   }
 
-  step() {
+  step(sigma=10, rho=28) {
     for (let j = 0; j < this.nMasses; j++) {
       const mj = this.masses[j];
       // this is where we do dynamics!
       vec3.set(mj.cpos,
-        this.sigma * (mj.position[1] - mj.position[0]),
-        mj.position[0] * (this.rho - mj.position[2]) - mj.position[1],
+        sigma * (mj.position[1] - mj.position[0]),
+        mj.position[0] * (rho - mj.position[2]) - mj.position[1],
         mj.position[0] * mj.position[1] - this.beta * mj.position[2])
       vec3.scale(mj.cpos, mj.cpos, 0.2)
     }
@@ -56,12 +56,12 @@ class Simulation {
       
       mass.arrays.color.copyWithin(3, 0);
       const positionMag = Math.max(0.125, vec3.length(mass.position) - 0.5);
-      mass.arrays.color[0] =
-        mass.color[0] * Math.min(1, Math.pow(positionMag, 1.0));
-      mass.arrays.color[1] =
-        mass.color[1] * Math.min(1, Math.pow(positionMag, 1.0));
-      mass.arrays.color[2] =
-        mass.color[2] * Math.min(1, Math.pow(positionMag, 1.0));
+      mass.arrays.color[0] = mass.color[0]
+        //mass.color[0] * Math.min(1, Math.pow(positionMag, 1.0));
+      mass.arrays.color[1] = mass.color[1]
+        //mass.color[1] * Math.min(1, Math.pow(positionMag, 1.0));
+      mass.arrays.color[2] = mass.color[2]
+        //mass.color[2] * Math.min(1, Math.pow(positionMag, 1.0));
     }
     this.steps++;
   }
@@ -75,7 +75,7 @@ const interleavedStripRoundCapJoin3DDEMO = commands.interleavedStripRoundCapJoin
 );
 
 const model = mat4.create();
-const view = mat4.lookAt([], [0, 0, 40], [0, 0, 0], [0, 1, 0]);
+const view = mat4.lookAt([], [0, 0, 80], [0, 0, 0], [0, 1, 0]);
 const projection = mat4.perspective(
   [],
   Math.PI / 3,
@@ -107,6 +107,23 @@ window.addEventListener("mouseout", () => {
   animate = false;
 });
 
+let sigma = 10
+window.addEventListener("keyup", (event) => {
+  if (event.key == 'ArrowDown'){
+    sigma -= 5;
+  }
+  else if (event.key == 'ArrowUp'){
+    sigma += 5;
+  }
+  else if (event.key == 'ArrowLeft'){
+    rho -= 2;
+  }
+  else if (event.key == 'ArrowRight'){
+    rho += 2;
+  }
+  
+})
+
 const buffers = [];
 for (const mass of sim.masses) {
   buffers.push({
@@ -120,7 +137,7 @@ function renderLoop() {
   if (!animate && sim.steps > 100) return;
   mat4.rotateY(model, model, 0.004);
   for (let i = 0; i < 3; i++) {
-    sim.step();
+    sim.step(sigma,rho);
   }
   regl.clear({ color: [0, 0, 0, 0] });
   for (let i = 0; i < sim.nMasses; i++) {
