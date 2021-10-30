@@ -75,17 +75,17 @@ const interleavedStripRoundCapJoin3DDEMO = commands.interleavedStripRoundCapJoin
 );
 
 const model = mat4.create();
-const view = mat4.lookAt([], [50, 50, 50], [0, 0, 0], [0, 1, 0]);
+const view = mat4.lookAt([], [0, 0, 40], [0, 0, 0], [0, 1, 0]);
 const projection = mat4.perspective(
   [],
   Math.PI / 3,
   canvas.width / canvas.height,
   0.01,
-  100
+  200
 );
 const viewport = { x: 0, y: 0, width: canvas.width, height: canvas.height };
 
-let sim = new Simulation(10, 1000, 0.0125);
+let sim = new Simulation(20, 300, 0.0125);
 sim.step();
 
 window.addEventListener("mousedown", () => {
@@ -93,7 +93,7 @@ window.addEventListener("mousedown", () => {
     animate = false;
   }
   else {
-    sim = new Simulation(10, 1000, 0.0125);
+    sim = new Simulation(20, 300, 0.0125);
     animate = true;
   }
 });
@@ -104,7 +104,7 @@ window.addEventListener("mouseover", () => {
 });
 
 window.addEventListener("mouseout", () => {
-  animate = true;
+  animate = false;
 });
 
 const buffers = [];
@@ -129,7 +129,7 @@ function renderLoop() {
     interleavedStripRoundCapJoin3DDEMO({
       points: buffers[i].position,
       color: buffers[i].color,
-      width: sim.masses[i].mass * 3,
+      width: sim.masses[i].mass * 10,
       model: model,
       view,
       projection,
