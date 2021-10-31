@@ -5,7 +5,7 @@ const glob = require("glob");
 const rimraf = require("rimraf");
 
 async function main() {
-  const files = glob.sync("src/n-body.js");
+  const files = glob.sync("src/dynamics.js");
 
   rimraf.sync("docs");
   fs.mkdirSync("docs");

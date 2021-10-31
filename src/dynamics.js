@@ -131,10 +131,14 @@ window.addEventListener("keyup", (event) => {
         1
       );
     }
+  }  
+  else if (event.key == 'y') {
+        do_y_rotation = !do_y_rotation
   }
 })
 
 let sim = new Simulation(20, 500, 0.0100);
+let do_y_rotation = true
 sim.step();
 
 window.addEventListener("mousedown", () => {
@@ -167,7 +171,9 @@ for (const mass of sim.masses) {
 function renderLoop() {
   requestAnimationFrame(renderLoop);
   if (!animate && sim.steps > 100) return;
-  mat4.rotateY(model, model, 0.004);
+  if (do_y_rotation === true) {
+    mat4.rotateY(model, model, 0.004);
+  }
   for (let i = 0; i < 3; i++) {
     sim.step(dynclass,sigma);
   }
